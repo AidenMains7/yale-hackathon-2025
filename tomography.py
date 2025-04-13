@@ -43,13 +43,13 @@ def run_quantum_tomography(
         os.makedirs(output_dir)
 
     # --- Generate state and Wigner function ---
-    if state = "coherent":
+    if state == "coherent":
         state = dq.coherent(N, alpha0)
         rho_true = dq.coherent_dm(N, alpha0)
-    if state = "cat": #only 2-cat right now
+    if state == "cat": #only 2-cat right now
         state = dq.coherent(N, alpha0)+dq.coherent(N, -alpha0)
         rho_true = dq.todm(state)
-    if state = "fock":
+    if state == "fock":
         state = dq.fock(N,n)
         rho_true = dq.fock_dm(N, n)
     
