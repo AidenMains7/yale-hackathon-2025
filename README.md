@@ -1,6 +1,6 @@
 # Reconstructing Quantum States
 Group Members: Nikolas Cruz, Daniel Huffman, Aiden Mains, Saimonth Muñoz, Kate Saltovets
-## Alice and Bob Challenge
+## [Alice and Bob Challenge](https://github.com/schlegeldavid/yq25_alice-bob_challenge/tree/main)
 We use dynamiqs to simulate cat states and their Wigner functions. We reconstruct quantum states from noise-polluted data using the density matrix $\rho$. 
 
 The Wigner function is a probability distribution in the complex plane. However, unlike a classical probability distribution, the Wigner function may take negative values, which is a sign of purely quantum interference.
