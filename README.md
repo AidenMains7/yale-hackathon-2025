@@ -43,4 +43,6 @@ With a Fidelity = 1.0001802. We also reconstructed the Wigner function for the e
 
 Fidelity of the 2-cat state with $\alpha = 2$, on the other hand, had the worst performance, improving up to 1.5 as we zoom in closer into the function while we're probing the points. 
 
+Fidelity of the fock $\ket{n=2}$ state was 0.998.
+
 
