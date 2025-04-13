@@ -8,7 +8,7 @@ import os
 
 def run_quantum_tomography(
     N=50,
-    n = 3
+    n = 3,
     alpha0=2.0,
     state = "coherent"
     output_dir="outputs",
