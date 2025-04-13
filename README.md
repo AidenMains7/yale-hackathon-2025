@@ -1,4 +1,4 @@
-# Reconstructing Quantum States from the Wigner function
+# Reconstructing Quantum States Using the Wigner Function
 Group Members: Nikolas Cruz, Daniel Huffman, Aiden Mains, Saimonth Muñoz, Kate Saltovets 
 
 Team Name: Cappuccino Assassino
