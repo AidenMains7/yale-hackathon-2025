@@ -2,17 +2,15 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage
+import cvxpy as cp
 
-# Load measured data
 with open('noisy_wigner_0.pickle', 'rb') as f:
     data = pickle.load(f)
     xvec, yvec, W_measured = data
   
-# Load generated data
 with open('quantum_state_0.pickle', 'rb') as f:
     generated = pickle.load(f)
 
-# 1. Estimate background (offset)
 def estimate_background_b(W):
     edges = np.concatenate([
         W[0].ravel(),
@@ -28,27 +26,26 @@ def estimate_background_b(W):
 
 b = estimate_background_b(W_measured)
 
-# 2. Subtract offset
+# remove offset parameter
 W_unbiased = W_measured - b
 
-# 3. Normalize so that integral over phase space = 1
+# normalize; total sum of wigner should be 1
 dx = xvec[1] - xvec[0]
 dy = yvec[1] - yvec[0]
 norm = np.sum(W_filtered) * dx * dy
 W_normalized = W_filtered / norm
 
-# 4. Apply Gaussian filter (denoise)
+# gaussian filter with variance 5.
 W_filtered = scipy.ndimage.gaussian_filter(W_unbiased, sigma=5)
 
 
-# 5. Rescale to be in [-2/π, +2/π]
-# This step is optional if your normalization is correct, but if needed:
+# rescale to proper range +- 2/ np.pi
 desired_max = 2 / np.pi
 W_rescaled = W_normalized * desired_max
 
 rescaled = (xvec, yvec, W_rescaled)
 
-# Plot original measured Wigner function
+# original Wigner function
 plt.figure(figsize=(6, 5))
 plt.imshow(W_measured, extent=[xvec[0], xvec[-1], yvec[0], yvec[-1]],
            origin='lower', cmap='RdBu_r', aspect='auto')
@@ -58,7 +55,7 @@ plt.title('Original Wigner Function (Measured)')
 plt.colorbar()
 plt.show()
 
-# Plot denoised and normalized Wigner function
+# normalized Wigner function
 abs_max = np.max(np.abs(W_rescaled))
 plt.figure(figsize=(6, 5))
 plt.imshow(W_rescaled.T, extent=[xvec[0], xvec[-1], yvec[0], yvec[-1]],
@@ -69,9 +66,6 @@ plt.ylabel('p')
 plt.title('Denoised & Normalized Wigner Function')
 plt.colorbar()
 plt.show()
-
-
-
 
 def reconstruct_rho(coh):
 
@@ -91,8 +85,7 @@ def reconstruct_rho(coh):
     points_x.append(random_int)
     random_int = random.randint(min_val, max_val)
     points_y.append(random_int)
-
-
+      
   P = dq.parity(N)
   w_klist, E_ks = [], []
 
@@ -105,36 +98,21 @@ def reconstruct_rho(coh):
       w_k = 1/2*(1+np.pi*W_a/2)
       E_ks.append(E)
       w_klist.append(w_k)
-
-
-  import cvxpy as cp
-
-
-  # Problem dimensions
-
-  K = len(E_ks)             # Number of measurement operators
-
-  # Variables
+        
+  K = len(E_ks)             
   rho = cp.Variable((N, N), complex=True)
-
-  # Constraints:
   constraints = [
       rho >> 0,             # Positive semidefinite
       cp.trace(rho) == 1,   # Trace normalization
   ]
 
-  # Objective:
   residuals = [cp.real(cp.trace(E_ks[k] @ rho)) - w_klist[k] for k in range(K)]
   objective = cp.Minimize(cp.sum_squares(cp.hstack(residuals)))
 
-  # Solve
-  problem = cp.Problem(objective, constraints)
-  problem.solve(solver=cp.SCS)  # Or try 'CVXOPT', 'MOSEK', etc.
+    problem = cp.Problem(objective, constraints)
+  problem.solve(solver=cp.SCS)
 
-  # Extract solution
-  return rho.value
-
-
+return rho.value
 
 
 rho_tilde = reconstruct_rho(rescaled)
