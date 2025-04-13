@@ -8,7 +8,9 @@ import os
 
 def run_quantum_tomography(
     N=50,
+    n = 3
     alpha0=2.0,
+    state = "coherent"
     output_dir="outputs",
     x_range=(0, 4),
     y_range=(-2, 2),
@@ -40,10 +42,19 @@ def run_quantum_tomography(
     if save_outputs and not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # --- Generate coherent state and Wigner function ---
-    coh = dq.coherent(N, alpha0)
+    # --- Generate state and Wigner function ---
+    if state = "coherent":
+        state = dq.coherent(N, alpha0)
+        rho_true = dq.coherent_dm(N, alpha0)
+    if state = "cat": #only 2-cat right now
+        state = dq.coherent(N, alpha0)+dq.coherent(N, -alpha0)
+        rho_true = dq.todm(state)
+    if state = "fock":
+        state = dq.fock(N,n)
+        rho_true = dq.fock_dm(N, n)
+    
     w = dq.wigner(
-        coh,
+        state,
         xvec=np.linspace(*x_range, grid_points),
         yvec=np.linspace(*y_range, grid_points),
     )
@@ -73,7 +84,6 @@ def run_quantum_tomography(
     problem.solve(solver=solver)
 
     rho_estimated = dq.asqarray(rho_var.value)
-    rho_true = dq.coherent_dm(N, alpha0)
 
     # --- Fidelity Check ---
     fidelity = dq.fidelity(rho_true, rho_estimated)
