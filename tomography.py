@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import dynamiqs as dq
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
