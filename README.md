@@ -10,3 +10,35 @@ The Wigner function is a probability distribution in the complex plane. However,
 Next, we measure accuracy by computing the fidelity of the observed data and the numerically computed fit.
 
 Finally, we analyze the accuracy of this fitting method by adding gaussian noise (with zero mean) to a Wigner function computed from a known quantum state by varying the standard deviation $\sigma$, which is equivalent to the magnitude of noise.
+
+# Results
+
+## Part A
+
+We obtained Wigner function for the following states: 
+
+Fock state $\ket{n=3}$
+
+![download (1)](https://github.com/user-attachments/assets/7bfccff6-fa46-44e1-83ac-4ff5fcd6ceb8)
+
+Coherent state $\alpha = 2$
+
+![download (2)](https://github.com/user-attachments/assets/ac8a0fca-e8ab-4363-a217-af17ba8bdef8)
+
+2-cat state and 3-cat state:
+
+![download (3)](https://github.com/user-attachments/assets/a62ff175-3652-457a-b193-bd9ff61a2ea4)
+
+![3](https://github.com/user-attachments/assets/d6225083-20ba-4144-b4c8-e3a063fc759e)
+
+## Part B: Estimating density matrix
+
+We obtained a great result for the coherent state with $\alpha = 2$
+
+![image (2)](https://github.com/user-attachments/assets/508eaf44-1781-4fc7-b404-e1a441f933e3)
+
+With a Fidelity = 1.0001802. We also reconstructed the Wigner function for the estimated state:
+
+![download (1) (1)](https://github.com/user-attachments/assets/a2c3c842-37f2-4e24-bff0-bd3f650f3827)
+
+
