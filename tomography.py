@@ -10,7 +10,7 @@ def run_quantum_tomography(
     N=50,
     n = 3,
     alpha0=2.0,
-    state = "coherent"
+    state = "coherent",
     output_dir="outputs",
     x_range=(0, 4),
     y_range=(-2, 2),
