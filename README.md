@@ -41,4 +41,6 @@ With a Fidelity = 1.0001802. We also reconstructed the Wigner function for the e
 
 ![download (1) (1)](https://github.com/user-attachments/assets/a2c3c842-37f2-4e24-bff0-bd3f650f3827)
 
+Fidelity of the 2-cat state with $\alpha = 2$, on the other hand, had the worst performance, improving up to 1.5 as we zoom in closer into the function while we're probing the points. 
+
 
